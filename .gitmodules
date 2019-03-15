@@ -1,0 +1,3 @@
+[submodule "qjsonchannel/simple-jsonrpc-js"]
+	path = qjsonchannel/simple-jsonrpc-js
+	url = https://github.com/kdeyev/simple-jsonrpc-js.git
