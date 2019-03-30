@@ -118,9 +118,8 @@ class Selector extends Component {
         let obj = result[k];
         for (let m in obj.methods) {
           let method = obj.methods[m];
-          let summary = method.summary;
-          let name = k + "." + summary;
-          let to_call = k + "." + m;
+          let name = k + "." + m;
+          let to_call = k + "." + method.name;
           functions[name]  = {
             "schema": method.params,
             "UISchema": {},
