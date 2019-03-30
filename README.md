@@ -1,7 +1,7 @@
-# RpcWebChannel JavaScript Client <img src="https://seeklogo.com/images/J/javascript-js-logo-2949701702-seeklogo.com.png" width="24" height="24">
+# rpc-web-channel JavaScript Client <img src="https://seeklogo.com/images/J/javascript-js-logo-2949701702-seeklogo.com.png" width="24" height="24">
 
-RpcWebChannel JavaScript mimics to [QtWebChannel JavaScript API](https://doc.qt.io/qt-5.12/qtwebchannel-javascript.html), but uses [JSON-RPC](http://jsonrpc.org/) protocol over uni-directional communication channel.
-In general RpcWebChannel JavaScript Client is the client API for RpcWebChannel server, which builds client-side stubs based on [JSON Schema Service Descriptor](https://jsonrpc.org/historical/json-schema-service-descriptor.html)
+rpc-web-channel mimics to [QtWebChannel JavaScript API](https://doc.qt.io/qt-5.12/qtwebchannel-javascript.html), but uses [JSON-RPC](http://jsonrpc.org/) protocol over uni-directional communication channel.
+In general rpc-web-channel JavaScript Client is the client API for rpc-web-channel server, which builds client-side stubs based on [JSON Schema Service Descriptor](https://jsonrpc.org/historical/json-schema-service-descriptor.html)
 
 # Motivation
 The regular JSON-RPC clien code:
@@ -18,7 +18,7 @@ jrpc.call("object.slot").then(function (result) {
     ...
 });
 ~~~~~~
-The RpcWebChannel client:
+The rpc-web-channel client:
 ~~~~~~
 var jrpc = new simple_jsonrpc();
 
@@ -27,7 +27,7 @@ jrpc.toStream = function(_msg){
 };
 
 
-new RpcWebChannel(jrpc, function(services) {
+new rpc-web-channel(jrpc, function(services) {
     services.object.slot().then(function (result) {
         ...
     });
@@ -35,7 +35,7 @@ new RpcWebChannel(jrpc, function(services) {
 ~~~~~~
 # Getters/Setters
 
-RpcWebChannel allows the symplyfied access to getters and setter. The regular access looks like:
+rpc-web-channel allows the symplyfied access to getters and setter. The regular access looks like:
 ~~~~~~
  // Properties access 
 object.setProperty("I'm setter").then(function (result) {
