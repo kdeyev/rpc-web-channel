@@ -118,11 +118,14 @@ class Selector extends Component {
         let obj = result[k];
         for (let m in obj.methods) {
           let method = obj.methods[m];
-          let name = k + "." + m;
+          let summary = method.summary;
+          let name = k + "." + summary;
+          let to_call = k + "." + m;
           functions[name]  = {
             "schema": method.params,
             "UISchema": {},
-            "formData": {}
+            "formData": {},
+            "serviceMethod": to_call
           };
         }
       }
@@ -192,7 +195,8 @@ class App extends Component {
     return shouldRender(this, nextProps, nextState);
   }
 
-  load = (functionName, data) => {
+  load = (functionSummary, data) => {
+    let functionName = data.serviceMethod;
     // Reset the ArrayFieldTemplate whenever you load new data
     const { ArrayFieldTemplate, ObjectFieldTemplate } = data;
     // uiSchema is missing on some examples. Provide a default to
