@@ -172,5 +172,5 @@ The current RPC method can be chosen using the Selector buttons. A react form wi
 ## References
 - [React JSon Schema Form](https://github.com/mozilla-services/react-jsonschema-form) A React component for building Web forms from JSON Schema.
 - [simple-jsonrpc-js](https://github.com/jershell/simple-jsonrpc-js) - Simple JSON-RPC javascript library. Generate and parse json rpc messages
-- [JSON-RPC](http://jsonrpc.org/) is lightweight remote procedure call protocol similar to XML-RPC.
+- [JSON-RPC 2.0](https://www.jsonrpc.org/specification) is lightweight remote procedure call protocol similar to XML-RPC.
 - [JSON Schema Service Descriptor](https://jsonrpc.org/historical/json-schema-service-descriptor.html)
