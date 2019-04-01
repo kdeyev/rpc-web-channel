@@ -33,39 +33,129 @@
         };
 
         //
-        // Slots calls
+        // Method calls
         //
-        jrpc.call("object.slot").then(function (result) {
-            document.getElementsByClassName('paragraph')[0].innerHTML += 'object.slot result: ' + result + '<br>';
+        // a method without parameters
+        jrpc.call("test.method").then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'test.method result: ' + result + '<br>';
+        });
+        jrpc.call("test.method", []).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'test.method result: ' + result + '<br>';
+        });
+        jrpc.call('test.method', {}).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'test.method result: ' + result + '<br>';
         });
 
-        jrpc.call('object.slotWithParams', ["one", false, 10]).then(function (result) {
-            document.getElementsByClassName('paragraph')[0].innerHTML += 'object.slotWithParams result: ' + result + '<br>';
+        // a method with parameters
+        jrpc.call('test.methodWithParams', ["string",true,42.0,41]).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'test.methodWithParams result: ' + result + '<br>';
+        });
+        // named arguments
+        jrpc.call('test.methodWithParams', {"first":"string","second":true,"third":42.0,"last":41}).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'test.methodWithParams result: ' + result + '<br>';
         });
 
-        jrpc.call('object.slotWithParamsAndReturnValue', ["kostya"]).then(function (result) {
-            document.getElementsByClassName('paragraph')[0].innerHTML += 'object.slotWithParamsAndReturnValue result: ' + result + '<br>';
+        // a method with parameters and return value
+        jrpc.call('test.methodWithParamsAndReturnValue', ["kostya"]).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'test.methodWithParamsAndReturnValue result: ' + result + '<br>';
+        });
+        // named arguments
+        jrpc.call('test.methodWithParamsAndReturnValue', {"name":"kostya"}).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'test.methodWithParamsAndReturnValue result: ' + result + '<br>';
         });
 
-        // Invokable maethods calls
-        jrpc.call('object.invokableSetter', ["I'm setter"]).then(function (result) {
-            document.getElementsByClassName('paragraph')[0].innerHTML += 'object.invokableSetter result: ' + result + '<br>';
+        // a method with default values
+        jrpc.call('test.methodWithDefaultParameter', ["foo", "bar"]).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'test.methodWithDefaultParameter result: ' + result + '<br>';
+        });
+        // default parameter
+        jrpc.call('test.methodWithDefaultParameter', ["foo"]).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'test.methodWithDefaultParameter result: ' + result + '<br>';
+        });
+        // named arguments
+        jrpc.call('test.methodWithDefaultParameter', {"first":"foo","second":"bar"}).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'test.methodWithDefaultParameter result: ' + result + '<br>';
+        });
+        // default parameter
+        jrpc.call('test.methodWithDefaultParameter', ["foo"]).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'test.methodWithDefaultParameter result: ' + result + '<br>';
+        });      
+   
+        // enum parameter
+        jrpc.call('test.methodWithEnumParam', ["AlignJustify"]).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'test.methodWithEnumParam result: ' + result + '<br>';
+        });
+        // named arguments
+        jrpc.call('test.methodWithEnumParam', {"al" : "AlignJustify"}).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'test.methodWithEnumParam result: ' + result + '<br>';
+        });
+
+
+        //
+        // Calculator
+        // 
+
+        // sum scalars
+        jrpc.call('calc.sum', [1.0,2.0]).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'calc.sum result: ' + result + '<br>';
+        });
+        // named arguments
+        jrpc.call('calc.sum', {"val1":1.0,"val2":2.0}).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'calc.sum result: ' + result + '<br>';
+        });
+
+        // sum vectors
+        jrpc.call('calc.sum', [{"x":1.0,"y":2},{"x":3.0,"y":4.0}]).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'calc.sum result: ' + JSON.stringify(result) + '<br>';
+        });
+        // named arguments
+        jrpc.call('calc.sum', {"val1":{"x":1.0,"y":2},"val2":{"x":3.0,"y":4.0}}).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'calc.sum result: ' + JSON.stringify(result) + '<br>';
+        });
+
+        // multiply vector and scalar
+        jrpc.call('calc.multiply', [{"x":1.0,"y":2},10]).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'calc.multiply result: ' + JSON.stringify(result) + '<br>';
+        });
+        jrpc.call('calc.multiply', [10,{"x":1.0,"y":2}]).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'calc.multiply result: ' + JSON.stringify(result) + '<br>';
+        });
+        // named arguments
+        jrpc.call('calc.multiply',{"val1":{"x":1.0,"y":2},"val2":10}).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'calc.multiply result: ' + JSON.stringify(result) + '<br>';
+        });
+        jrpc.call('calc.multiply',{"val2":10,"val1":{"x":1.0,"y":2}}).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'calc.multiply result: ' + JSON.stringify(result) + '<br>';
+        });
+
+        // dot
+        jrpc.call('calc.dot', [{"x":1.0,"y":2},{"x":3.0,"y":4.0}]).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'calc.dot result: ' + result + '<br>';
+        });
+        // named arguments
+        jrpc.call('calc.dot',{"val1":{"x":1.0,"y":2},"val2":{"x":3.0,"y":4.0}}).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'calc.dot result: ' + result + '<br>';
+        });
+
+        // // Invokable maethods calls
+        // jrpc.call('object.invokableSetter', ["I'm setter"]).then(function (result) {
+        //     document.getElementsByClassName('paragraph')[0].innerHTML += 'object.invokableSetter result: ' + result + '<br>';
         
-            // call Getter as function call
-            jrpc.call('object.invokableGetter', []).then(function (result) {
-                document.getElementsByClassName('paragraph')[0].innerHTML += 'object.invokableGetter    result: ' + result + '<br>';
-            });
-        });
+        //     // call Getter as function call
+        //     jrpc.call('object.invokableGetter', []).then(function (result) {
+        //         document.getElementsByClassName('paragraph')[0].innerHTML += 'object.invokableGetter    result: ' + result + '<br>';
+        //     });
+        // });
 
-        // Properties access 
-        jrpc.call('object.setProperty', ["I'm setter"]).then(function (result) {
-            document.getElementsByClassName('paragraph')[0].innerHTML += 'object.setProperty result: ' + result + '<br>';
+        // // Properties access 
+        // jrpc.call('object.setProperty', ["I'm setter"]).then(function (result) {
+        //     document.getElementsByClassName('paragraph')[0].innerHTML += 'object.setProperty result: ' + result + '<br>';
         
-            // call Getter as function call
-            jrpc.call('object.getProperty', []).then(function (result) {
-                document.getElementsByClassName('paragraph')[0].innerHTML += 'object.getProperty    result: ' + result + '<br>';
-            });
-        });
+        //     // call Getter as function call
+        //     jrpc.call('object.getProperty', []).then(function (result) {
+        //         document.getElementsByClassName('paragraph')[0].innerHTML += 'object.getProperty    result: ' + result + '<br>';
+        //     });
+        // });
 
 </script>
 </body>

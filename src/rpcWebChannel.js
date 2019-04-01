@@ -82,7 +82,7 @@ function JsonChannelObject(name, data, jrpc)
 
     let methods = [];
     for (let key in data.methods) {
-        methods.push(key);
+        methods.push(data.methods[key].name);
     }
     methods.forEach(addMethod);
 

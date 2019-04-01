@@ -46,54 +46,103 @@
         //after connect
         socket.onopen = function(){
             new RpcWebChannel(jrpc, function(services) {
-                let object = services.object;
+                let test = services.test;
+                let calc = services.calc;
 
                 //
-                // Slots calls
+                // Method calls
                 //
-                object.slot().then(function (result) {
-                    document.getElementsByClassName('paragraph')[0].innerHTML += 'object.slot result: ' + result + '<br>';
+                // a method without parameters
+                test.method().then(function (result) {
+                    document.getElementsByClassName('paragraph')[0].innerHTML += 'test.method result: ' + result + '<br>';
                 });
 
-                object.slotWithParams("one", false, 10).then(function (result) {
-                    document.getElementsByClassName('paragraph')[0].innerHTML += 'object.slotWithParams result: ' + result + '<br>';
+                // a method with parameters
+                test.methodWithParams("string", true, 42.0, 41).then(function (result) {
+                    document.getElementsByClassName('paragraph')[0].innerHTML += 'test.methodWithParams result: ' + result + '<br>';
                 });
-
-                object.slotWithParamsAndReturnValue ("kostya").then(function (result) {
-                    document.getElementsByClassName('paragraph')[0].innerHTML += 'object.slotWithParamsAndReturnValue result: ' + result + '<br>';
+            
+                // a method with parameters and return value
+                test.methodWithParamsAndReturnValue("kostya").then(function (result) {
+                    document.getElementsByClassName('paragraph')[0].innerHTML += 'test.methodWithParamsAndReturnValue result: ' + result + '<br>';
                 });
-
-                // Invokable maethods calls
-                object.invokableSetter("I'm setter").then(function (result) {
-                    document.getElementsByClassName('paragraph')[0].innerHTML += 'object.invokableSetter result: ' + result + '<br>';
                 
-                    // call Getter as function call
-                    object.invokableGetter().then(function (result) {
-                        document.getElementsByClassName('paragraph')[0].innerHTML += 'object.invokableGetter    result: ' + result + '<br>';
-                    });
+                // a method with default values
+                test.methodWithDefaultParameter("foo", "bar").then(function (result) {
+                    document.getElementsByClassName('paragraph')[0].innerHTML += 'test.methodWithDefaultParameter result: ' + result + '<br>';
                 });
-
-                // Properties access 
-                object.setProperty("I'm setter").then(function (result) {
-                    document.getElementsByClassName('paragraph')[0].innerHTML += 'object.setProperty result: ' + result + '<br>';
+                // default parameter
+                test.methodWithDefaultParameter("foo").then(function (result) {
+                    document.getElementsByClassName('paragraph')[0].innerHTML += 'test.methodWithDefaultParameter result: ' + result + '<br>';
+                });  
+        
+                // enum parameter
+                test.methodWithEnumParam("AlignJustify").then(function (result) {
+                    document.getElementsByClassName('paragraph')[0].innerHTML += 'test.methodWithEnumParam result: ' + result + '<br>';
+                });
                 
-                    // call Getter as function call
-                    object.getProperty().then(function (result) {
-                        document.getElementsByClassName('paragraph')[0].innerHTML += 'object.getProperty    result: ' + result + '<br>';
-                    });
+                //
+                // Calculator
+                // 
+        
+                let vector = {"x":1.0,"y":2};
+                let vector1 = {"x":1.0,"y":2};
+                let vector2 = {"x":3.0,"y":4.0};
+
+                // sum scalars
+                calc.sum(1.0,2.0).then(function (result) {
+                    document.getElementsByClassName('paragraph')[0].innerHTML += 'calc.sum result: ' + result + '<br>';
                 });
 
-                // Anonymous local async function call is nedded for further await
-                (async function() {
-                    // wait for setter finish
-                    await (object.propertyWithGetterSetter = 42);
+                // sum vectors
+                calc.sum(vector1, vector2).then(function (result) {
+                    document.getElementsByClassName('paragraph')[0].innerHTML += 'calc.sum result: ' + JSON.stringify(result) + '<br>';
+                });
 
-                    // wait for getter finish
-                    let property = await object.propertyWithGetterSetter;
+                // multiply vector and scalar
+                calc.multiply(vector, 10).then(function (result) {
+                    document.getElementsByClassName('paragraph')[0].innerHTML += 'calc.multiply result: ' + JSON.stringify(result) + '<br>';
+                });
+                calc.multiply(10, vector).then(function (result) {
+                    document.getElementsByClassName('paragraph')[0].innerHTML += 'calc.multiply result: ' + JSON.stringify(result) + '<br>';
+                });
 
-                    // synch access to property
-                    document.getElementsByClassName('paragraph')[0].innerHTML += 'propertyWithGetterSetter result: ' + property + '<br>';
-                }());
+                // dot
+                calc.dot(vector1, vector2).then(function (result) {
+                    document.getElementsByClassName('paragraph')[0].innerHTML += 'calc.dot result: ' + result + '<br>';
+                });
+
+                // // Invokable maethods calls
+                // object.invokableSetter("I'm setter").then(function (result) {
+                //     document.getElementsByClassName('paragraph')[0].innerHTML += 'object.invokableSetter result: ' + result + '<br>';
+                
+                //     // call Getter as function call
+                //     object.invokableGetter().then(function (result) {
+                //         document.getElementsByClassName('paragraph')[0].innerHTML += 'object.invokableGetter    result: ' + result + '<br>';
+                //     });
+                // });
+
+                // // Properties access 
+                // object.setProperty("I'm setter").then(function (result) {
+                //     document.getElementsByClassName('paragraph')[0].innerHTML += 'object.setProperty result: ' + result + '<br>';
+                
+                //     // call Getter as function call
+                //     object.getProperty().then(function (result) {
+                //         document.getElementsByClassName('paragraph')[0].innerHTML += 'object.getProperty    result: ' + result + '<br>';
+                //     });
+                // });
+
+                // // Anonymous local async function call is nedded for further await
+                // (async function() {
+                //     // wait for setter finish
+                //     await (object.propertyWithGetterSetter = 42);
+
+                //     // wait for getter finish
+                //     let property = await object.propertyWithGetterSetter;
+
+                //     // synch access to property
+                //     document.getElementsByClassName('paragraph')[0].innerHTML += 'propertyWithGetterSetter result: ' + property + '<br>';
+                // }());
             });
         };
 
